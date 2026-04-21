@@ -64,7 +64,7 @@ const Contact = () => {
                 </textarea>
               </div>
 
-              <button type={"submit"} className={"w-full bg-blue-600 hover:bg-blue-700 text-white"}>Send Message</button>
+              <button type={"submit"} className={"w-full bg-blue-600 hover:bg-blue-700 text-white rounded-lg py-3"}>Send Message</button>
             </form>
           </div>
         </div>
