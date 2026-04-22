@@ -35,3 +35,8 @@ Use Client Components when you need:
 - Lifecycle logic. E.g. useEffect.
 - Browser-only APIs. E.g. localStorage, window, Navigator.geolocation, etc.
 - Custom hooks.
+
+Resource Links:
+- [Server vs Client Components](https://nextjs.org/docs/app/getting-started/server-and-client-components)
+- [Tutorial](https://nextjs.org/learn/react-foundations/server-and-client-components)
+- [Server and client components in Next.js: when, how, and why?](https://www.byteminds.co.uk/blog/server-and-client-components-in-next-js-when-how-and-why)
