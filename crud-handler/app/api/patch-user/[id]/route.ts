@@ -1,0 +1,37 @@
+import {NextRequest, NextResponse} from "next/server";
+import {users} from "@/app/api/get-user/route";
+
+export async function PATCH(request: NextRequest, {params}: {params: Promise<{id: string}>}) {
+
+    try{
+        const {id} = await params;
+        const userId = parseInt(id);
+
+        const userIdx = users.findIndex((user) => user.id === userId);
+
+        if(userIdx === -1){
+            return NextResponse.json(
+                {success: false, error: "User not found"},
+                {status: 404}
+            )
+        }
+
+        const body = await request.json();
+
+        users[userIdx] = {
+            ...users[userIdx],
+            ...body,
+            id: userId,
+        }
+
+        return NextResponse.json(
+            {success: true, data: users, message: "user found"},
+            {status: 200}
+        )
+    }catch (err){
+        return NextResponse.json(
+            {success: false, error: "Failed to update user"},
+            {status: 400}
+        )
+    }
+}
