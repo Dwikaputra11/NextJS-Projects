@@ -21,7 +21,7 @@ export async function PUT(request: NextRequest, {params}: {params: Promise<{id: 
         if(!name || !email || !age){
             return NextResponse.json(
                 {success: false, error: "Missing required fields"},
-                {status: 400}
+                {status: 400}tittitle
             )
         }
 
