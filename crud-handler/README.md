@@ -1,36 +1,131 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# REST API, Query Param, Header and Cookie
 
-## Getting Started
+## REST API
+Calling an API in Next.Js by default is using proxy route handler by default, to call an api you have to put it inside `/app` directory, for example `/app/api`.
+Not only that, you must name your file to `route.ts` or `route.js`.
 
-First, run the development server:
+### GET Request
+Route: `/api/get-user`
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+We have to specify the function name by what request method you want to use. In this case is `GET`
+```javascript
+export async function GET(req: NextRequest) {
+    try{
+        
+        return NextResponse.json({
+            success: true,
+            data: users,
+            total: users.length
+        })
+    }catch (error){
+        return NextResponse.json({
+            success: false,
+            error: "failed to get users"
+        })
+    }
+}
+```
+To call data by id, create new route with `[id]` directory.
+
+Route: `/api/get-user/[id]`
+```javascript
+export async function GET(request: NextRequest, {params}: {params: Promise<{id: string}>}) {
+
+    try{
+        const {id} = await params;
+        const userId = parseInt(id);
+
+        const user = users.find((user) => user.id === userId);
+
+        return NextResponse.json(
+            {success: true, data: user, message: "user found"},
+            {status: 200}
+        )
+    }catch (err){
+        return NextResponse.json(
+            {success: false, error: "Failed to update user"},
+            {status: 400}
+        )
+    }
+}
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### POST Request
+Route: `/api/create-user`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+We have to specify the function name by what request method you want to use. In this case is `POST`
+```javascript
+export async function POST(request: NextRequest) {
+    ...
+}
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### PUT Request
+Route: `/api/put-user`
 
-## Learn More
+We have to specify the function name by what request method you want to use. In this case is `PUT`
+```javascript
+export async function PUT(request: NextRequest) {
+    ...
+}
+```
 
-To learn more about Next.js, take a look at the following resources:
+### Delete Request
+Route: `/api/delete-user/[id]`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+We have to specify the function name by what request method you want to use. In this case is `DELETE`
+```javascript
+export async function DELETE(request: NextRequest) {
+    ...
+}
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Headers
+To access header we can import `next/headers`
+```javascript
+import {headers} from "next/headers";
+```
+To access it
+```javascript
+const headerList = await headers();
+const authHeader = headerList.get("authorization");
+```
 
-## Deploy on Vercel
+To set headers we can do like this
+```javascript
+const response = NextResponse.json({success: true, data: "Hello world from profile!"});
+response.headers.set("Authorization", "Bearer " + authHeader);
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+return response;
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+or
+```javascript
+return new Response(
+    `<h1>${authHeader}</h1>`,
+    {
+        headers: {
+            "Content-Type": "text/html",
+            "X-Custom-Header": "Next.js Tutorial"
+        }
+    }
+);
+```
+
+## Cookie
+import `next/headers`
+```javascript
+import {cookies} from "next/headers";
+```
+
+To access cookies
+```javascript
+const theme = request.cookies.get("theme");
+// or
+const cookieStore = await cookies(); // better approach
+const result = cookieStore.get("result");
+
+// to set
+cookieStore.set("score", "222");
+```
+

@@ -14,17 +14,22 @@ export async function GET(request: NextRequest){
 
     console.log(authHeader);
 
+    const response = NextResponse.json({success: true, data: "Hello world from profile!"});
+    response.headers.set("Authorization", "Bearer " + authHeader);
+
+    return response;
+
     // return NextResponse.json({success: true, data: "Hello world from profile!"})
 
 
     // to make new header, you have to pass it as response
-    return new Response(
-        `<h1>${authHeader}</h1>`,
-        {
-            headers: {
-                "Content-Type": "text/html",
-                "X-Custom-Header": "Next.js Tutorial"
-            }
-        }
-    );
+    // return new Response(
+    //     `<h1>${authHeader}</h1>`,
+    //     {
+    //         headers: {
+    //             "Content-Type": "text/html",
+    //             "X-Custom-Header": "Next.js Tutorial"
+    //         }
+    //     }
+    // );
 }
