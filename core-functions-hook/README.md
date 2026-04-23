@@ -75,11 +75,11 @@ export default page;
 
 ### Cache Options Explained
 
-| Option | Behavior |
-|--------|----------|
-| `cache: "force-cache"` | Cache the response and reuse it on every request (default in Next.js) |
-| `cache: "no-store"` | Never cache — always fetch fresh data on every request |
-| `cache: "no-cache"` | Fetch fresh, but store the result in cache for potential future reuse |
+| Option                 | Behavior |
+|------------------------|----------|
+| `cache: "no-cache"`    | Cache the response and reuse it on every request (default in Next.js) |
+| `cache: "no-store"`    | Never cache — always fetch fresh data on every request |
+| `cache: "force-cache"` | Fetch fresh, but store the result in cache for potential future reuse |
 
 ### `next.revalidate` Options
 
